@@ -80,10 +80,14 @@ const PortalHost: PortalHostComponent = (props) => {
     dispatch(dispatchUnmount(key));
   }, []);
 
+  const providerActions = useRef({
+    mount: onMount,
+    update: onUpdate,
+    unmount: onUnmount,
+  });
+
   return (
-    <PortalContext.Provider
-      value={{ mount: onMount, update: onUpdate, unmount: onUnmount }}
-    >
+    <PortalContext.Provider value={providerActions.current}>
       {children}
       <div>
         {nodes.map(({ key, children: node }) => (

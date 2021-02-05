@@ -18,9 +18,8 @@ export type PortalComponent<P = {}> = {
 const Portal: PortalComponent<PortalProps> = (props) => {
   const { children } = props;
   const context = useContext(PortalContext);
-  const actions = useRef(context);
 
-  return <PortalForward actions={actions.current}>{children}</PortalForward>;
+  return <PortalForward actions={context}>{children}</PortalForward>;
 };
 
 Portal.Host = PortalHost;

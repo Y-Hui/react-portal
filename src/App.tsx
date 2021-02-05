@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Portal } from "./components";
 
 function Home() {
+  console.log("Render Home");
   return <h2>Home Component</h2>;
 }
 
