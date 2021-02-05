@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Portal } from "./components";
 
+function Home() {
+  return <h2>Home Component</h2>;
+}
+
 function App() {
   const [value, setValue] = useState("Portal Content.");
 
@@ -14,6 +18,8 @@ function App() {
         >
           React App.
         </h1>
+        <Home />
+        <input type="text" onChange={(e) => setValue(e.target.value)} />
         <Portal>
           <h2>{value}</h2>
         </Portal>

@@ -21,13 +21,11 @@ const PortalForward: React.FC<PortalForwardProps> = (props) => {
     actions.unmount(currentKey.current);
   });
 
-  // TODO BUG: actions 触发无限递归
   useEffect(() => {
     if (currentKey.current !== -1) {
-      console.log("update");
       actions.update(currentKey.current, children);
     }
-  }, [children]);
+  }, [children, actions]);
 
   return null;
 };

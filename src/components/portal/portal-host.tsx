@@ -12,15 +12,15 @@ export type PortalHostComponent<P = {}> = {
   (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
 };
 
-interface NodeList {
+interface NodeItem {
   key: number;
   children: React.ReactNode;
 }
 
-function dispatchMount(key: number, node: NodeList["children"]) {
+function dispatchMount(key: number, node: NodeItem["children"]) {
   return { type: "mount", key, payload: node } as const;
 }
-function dispatchUpdate(key: number, node: NodeList["children"]) {
+function dispatchUpdate(key: number, node: NodeItem["children"]) {
   return { type: "update", key, payload: node } as const;
 }
 function dispatchUnmount(key: number) {
@@ -32,7 +32,7 @@ type Actions =
   | ReturnType<typeof dispatchUpdate>
   | ReturnType<typeof dispatchUnmount>;
 
-function actions(state: NodeList[], action: Actions): NodeList[] {
+function actions(state: NodeItem[], action: Actions): NodeItem[] {
   switch (action.type) {
     case "mount":
       return [...state, { key: action.key, children: action.payload }];
@@ -67,12 +67,12 @@ const PortalHost: PortalHostComponent = (props) => {
     }
   }, [nodes]);
 
-  const onMount = useCallback((node: NodeList["children"]) => {
+  const onMount = useCallback((node: NodeItem["children"]) => {
     dispatch(dispatchMount(nextKey.current, node));
     return nextKey.current;
   }, []);
 
-  const onUpdate = useCallback((key: number, node: NodeList["children"]) => {
+  const onUpdate = useCallback((key: number, node: NodeItem["children"]) => {
     dispatch(dispatchUpdate(key, node));
   }, []);
 

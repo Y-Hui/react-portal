@@ -1,4 +1,9 @@
-import React, { PropsWithChildren, ReactElement, useContext } from "react";
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  useContext,
+  useRef,
+} from "react";
 import { PortalContext } from "./context";
 import PortalForward from "./portal-forward";
 import PortalHost, { PortalHostComponent } from "./portal-host";
@@ -12,11 +17,10 @@ export type PortalComponent<P = {}> = {
 
 const Portal: PortalComponent<PortalProps> = (props) => {
   const { children } = props;
-  const actions = useContext(PortalContext)
+  const context = useContext(PortalContext);
+  const actions = useRef(context);
 
-  return (
-    <PortalForward actions={actions}>{children}</PortalForward>
-  );
+  return <PortalForward actions={actions.current}>{children}</PortalForward>;
 };
 
 Portal.Host = PortalHost;
